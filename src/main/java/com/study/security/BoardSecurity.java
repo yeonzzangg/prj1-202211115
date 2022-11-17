@@ -18,3 +18,10 @@ public class BoardSecurity {
 		return board.getWriter().equals(username);
 	}
 }
+
+
+
+
+
+
+

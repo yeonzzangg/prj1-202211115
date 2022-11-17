@@ -18,6 +18,6 @@ public interface MemberMapper {
 
 	MemberDto selectByEmail(String email);
 
-	MemberDto getByNickName(String nickName);
+	MemberDto selectByNickName(String nickName);
 
 }

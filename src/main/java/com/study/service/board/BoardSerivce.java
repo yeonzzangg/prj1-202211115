@@ -1,6 +1,8 @@
 package com.study.service.board;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -108,9 +110,9 @@ public class BoardSerivce {
 		return boardMapper.list(offset, records, type, "%" + keyword + "%");
 	}
 
-	public BoardDto get(int id) {
+	public BoardDto get(int id, String username) {
 		// TODO Auto-generated method stub
-		return boardMapper.select(id);
+		return boardMapper.select(id, username);
 	}
 
 	public int update(BoardDto board, MultipartFile[] addFiles, List<String> removeFiles) {
@@ -122,8 +124,7 @@ public class BoardSerivce {
 			for (String fileName : removeFiles) {
 				// 1. File 테이블에서 record 지우기
 				boardMapper.deleteFileByBoardIdAndFileName(boardId, fileName);
-				
-				// 2. S3 저장소에 실제 파일(Object) 지우기
+				// 2. S3 저장소에 실제 파일(object) 지우기
 				deleteFile(boardId, fileName);
 			}
 		}
@@ -138,7 +139,7 @@ public class BoardSerivce {
 				// File table에 파일명 추가
 				boardMapper.insertFile(boardId, name);
 				
-				// S3 저장소에 실제 파일 추가
+				// S3 저장소에 실제 파일(object) 추가
 				uploadFile(boardId, file);
 			}
 			
@@ -155,6 +156,7 @@ public class BoardSerivce {
 		
 		if (fileNames != null) {
 			for (String fileName : fileNames) {
+				// s3 저장소의 파일 지우기
 				deleteFile(id, fileName);
 			}
 		}
@@ -168,18 +170,49 @@ public class BoardSerivce {
 		
 //		int a = 3 / 0; // runtime exception
 		
+		// 좋아요 지우기
+		boardMapper.deleteLikeByBoardId(id);
+		
 		// 게시물 지우기
 		return boardMapper.delete(id);
 	}
 
 	private void deleteFile(int id, String fileName) {
-		// s3 저장소의 파일 지우기
 		String key = "prj1/board/" + id + "/" + fileName;
 		DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
 				.bucket(bucketName)
 				.key(key)
 				.build();
 		s3Client.deleteObject(deleteObjectRequest);
+	}
+
+	public Map<String, Object> updateLike(String boardId, String memberId) {
+		Map<String, Object> map = new HashMap<>();
+		
+		int cnt = boardMapper.getLikeByBoardIdAndMemberId(boardId, memberId);
+		if (cnt == 1) {
+			// boardId와 username으로 좋아요 테이블 검색해서 있으면?
+			// 삭제
+			boardMapper.deleteLike(boardId, memberId);
+			map.put("current", "not liked");
+			
+		} else {
+			// 없으면?
+			// insert
+			boardMapper.insertLike(boardId, memberId);
+			map.put("current", "liked");
+		}
+
+		int countAll = boardMapper.countLikeByBoardId(boardId);
+		// 현재 몇개인지
+		map.put("count", countAll);
+		
+		return map;
+	}
+
+	public BoardDto get(int id) {
+		// TODO Auto-generated method stub
+		return get(id, null);
 	}
 	
 }
