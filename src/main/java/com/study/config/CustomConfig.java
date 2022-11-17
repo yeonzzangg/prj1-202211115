@@ -21,7 +21,7 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 
-@Configuration
+@Configuration //빈을 주입하는 클래스로 인식?
 @MapperScan("com.study.mapper")
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class CustomConfig {
@@ -44,13 +44,16 @@ public class CustomConfig {
 		servletContext.setAttribute("imgUrl", imgUrl);
 	}
 	
-	@Bean
+	@Bean 
 	public PasswordEncoder passwordEncoder() {
 		
 		return new BCryptPasswordEncoder();
 	}
+	// 비밀번호 암호화 빈
+	// 시큐리티에서 권장하는 패스워드 인코더 BCryptPasswordEncoder()
 	
-	@Bean
+	
+	@Bean 
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.formLogin().loginPage("/member/login").defaultSuccessUrl("/board/list", true);
 		http.logout().logoutUrl("/member/logout");
@@ -58,6 +61,10 @@ public class CustomConfig {
 		
 		return http.build();
 	}
+	// HttpSecurity 이 객체로 시큐리티 필터체인 쉽게 만들수잇음
+	// formLogin()은 formloginconfigure리턴
+	
+	
 
 	@Bean
 	public S3Client s3Client() {

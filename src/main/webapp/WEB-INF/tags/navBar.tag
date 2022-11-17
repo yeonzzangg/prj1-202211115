@@ -11,7 +11,7 @@
 
 <%-- authorize tag --%>
 <%-- spring security expression, 책 673/674 --%>
-<%--
+<%-- isAuthenticated() : 인증된 사용자면 true
 <sec:authorize access="isAuthenticated()">
 		<h1>로그인됨!</h1>
 </sec:authorize>

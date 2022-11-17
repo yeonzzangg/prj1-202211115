@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 import com.study.domain.member.MemberDto;
 import com.study.mapper.member.MemberMapper;
 
-@Component
-public class CustomUserDetailsService implements UserDetailsService {
+@Component // 빈으로 쓰려고
+public class CustomUserDetailsService implements UserDetailsService { // 사용자 정보 제공
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -25,7 +25,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		MemberDto member = mapper.selectById(username);
+		// id가 spring security기준으로 ussername
+		MemberDto member = mapper.selectById(username); 
 		
 		if (member == null) {
 			return null;

@@ -16,9 +16,11 @@
 
 	
 	<form action="" method="post">
-	id <input type="text" name="username"> <br>
+	<!-- security는 아이디, 비밀번호 username, password로 보내야됨 -->
+	id <input type="text" name="username"> <br> 
 	pw <input type="text" name="password"> <br>
 	<%--
+	공격방지 토큰
 	<sec:csrfInput>
 	 --%>
 	<input type="submit" value="로그인">

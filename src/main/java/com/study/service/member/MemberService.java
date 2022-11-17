@@ -33,6 +33,7 @@ public class MemberService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	
 	public int insert(MemberDto member) {
 		
 		String pw = member.getPassword();
