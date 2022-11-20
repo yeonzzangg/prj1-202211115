@@ -47,6 +47,7 @@
 						<div id="nickNameText1" class="form-text"></div>
 					</div>
 					
+					<!-- 암호 변경여부 체크박스 -->
 					<input type="checkbox" name="newPassword" value="true" id="newPasswordCheckbox1"> 암호 변경
 					
 					<div class="mb-3">
@@ -156,10 +157,10 @@ function enableModifyButton() {
 document.querySelector("#newPasswordCheckbox1").addEventListener("change", function() {
 	const pwInput1 = document.querySelector("#passwordInput1");
 	const pwInput2 = document.querySelector("#passwordInput2");
-	if (this.checked) {
+	if (this.checked) { //활성화
 		pwInput1.removeAttribute("disabled");
 		pwInput2.removeAttribute("disabled");
-	} else {
+	} else { //비활성화
 		pwInput1.setAttribute("disabled", "");
 		pwInput2.setAttribute("disabled", "");
 	}

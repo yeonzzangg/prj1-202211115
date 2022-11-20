@@ -35,28 +35,26 @@ public class MemberService {
 
 	
 	public int insert(MemberDto member) {
-		
+		// 평문으로 넘어온 패스워드
 		String pw = member.getPassword();
-		
+		// 인코드(암호화)해서 넘기기
 		member.setPassword(passwordEncoder.encode(pw));
 		
 		return memberMapper.insert(member);
 	}
 
 	public List<MemberDto> list() {
-		// TODO Auto-generated method stub
 		return memberMapper.selectAll();
 	}
 
 	public MemberDto getById(String id) {
-		// TODO Auto-generated method stub
 		return memberMapper.selectById(id);
 	}
 
 	public int modify(MemberDto member) {
 		int cnt = 0;
 		
-		try {
+		try { 
 			if (member.getPassword() != null) {
 				String encodedPw = passwordEncoder.encode(member.getPassword());
 				member.setPassword(encodedPw);

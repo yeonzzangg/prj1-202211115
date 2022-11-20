@@ -46,7 +46,6 @@
 		email = #{email}
 	WHERE
 		id = #{id}
-	
 	</update>
 
 	<select id="selectById" resultType="com.study.domain.member.MemberDto">

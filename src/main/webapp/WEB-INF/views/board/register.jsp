@@ -14,6 +14,7 @@
 </head>
 <body>
 	<my:navBar active="register"></my:navBar>
+	
 	<div class="container-md">
 		<div class="row">
 			<div class="col">
@@ -33,6 +34,7 @@
 						<input multiple type="file" accept="image/*" class="form-control" name="files">
 					</div>
 					
+					<!-- authentication 인증받은 사용자 정보가 들어있음 -->
 					<div class="mb-3">
 						<label for="" class="form-label">작성자</label>
 						<input 

@@ -143,10 +143,14 @@ public class MemberController {
 	}
 
 	@PostMapping("remove")
-	public String remove(String id, String oldPassword, RedirectAttributes rttr, HttpServletRequest request)
+	public String remove(String id,
+			String oldPassword, 
+			RedirectAttributes rttr, 
+			HttpServletRequest request)
 			throws Exception {
+		
 		MemberDto oldmember = service.getById(id);
-
+		// 평문, 암호화된 암호
 		boolean passwordMatch = passwordEncoder.matches(oldPassword, oldmember.getPassword());
 
 		if (passwordMatch) {

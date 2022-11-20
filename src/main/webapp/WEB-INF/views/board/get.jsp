@@ -27,7 +27,7 @@
 							<c:param name="id" value="${board.id }"></c:param>
 						</c:url>
 						
-						<sec:authentication property="name" var="username" />
+						<sec:authentication property="name" var="username" scope=""/>
 						
 						<%-- 작성자와 authentication.name 같으면 보여줌 --%>
 						<c:if test="${board.writer == username}">

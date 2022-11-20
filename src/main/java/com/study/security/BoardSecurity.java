@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import com.study.domain.board.BoardDto;
 import com.study.mapper.board.BoardMapper;
 
-@Component
+@Component // 빈으로 만들기
 public class BoardSecurity {
 	
 	@Autowired

@@ -133,6 +133,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("modify")
+//	@PreAuthorize("@빈 이름.메소드이름(authentication.name, #board.id)")
 	@PreAuthorize("@boardSecurity.checkWriter(authentication.name, #board.id)")
 	public String modify(
 			BoardDto board, 
