@@ -3,6 +3,7 @@ package com.study.security;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,8 +32,9 @@ public class CustomUserDetailsService implements UserDetailsService { // 사용�
 		if (member == null) {
 			return null;
 		}
+		List<SimpleGrantedAuthority> authoritiyList = null;
 		
-		User user = new User(member.getId(), member.getPassword(), List.of());
+		User user = new User(member.getId(), member.getPassword(), authoritiyList);
 		
 		return user;
 	}
